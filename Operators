@@ -1,0 +1,23 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <p id="result1"></p>
+        <p id="result2"></p>
+        <p id="result3"></p>
+        <p id="result4"></p>
+        <script>
+            var a,b,sum,sub,multiply,div;
+            a= 20;
+            b= 10;
+            sum= a+b;
+            sub= a-b;
+            multiply= a*b;
+            div= a/b
+            document.getElementById("result1").innerHTML= "The sum is " + sum;
+            document.getElementById("result2").innerHTML= "The difference is " + sub;
+            document.getElementById("result3").innerHTML= "The product is " + multiply;
+            document.getElementById("result4").innerHTML= "The quotient is " + div;
+        </script>
+    </body>
+</html> 
