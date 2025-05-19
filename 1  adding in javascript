@@ -6,9 +6,10 @@
         <p id="num2"></p>
         <p id="result"></p>
         <script>
-            var a= 10;
-            var b= 20;
-            var sum= a+b;
+            var a,b,sum;
+             a= 10;
+             b= 20;
+             sum= a+b;
             document.getElementById("result").innerHTML= "The sum is " + sum;
         </script>
     </body>
