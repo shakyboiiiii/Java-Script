@@ -1,0 +1,10 @@
+<html>
+<head>
+</head>
+<body>
+    <p id="test"></p>
+    <script>
+        document.getElementById("test").innerHTML="i am from Java script";
+    </script>
+</body>
+</html>
