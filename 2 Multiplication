@@ -1,0 +1,17 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <p id="result1"></p>
+        <p id="result2"></p>
+        <p id="result3"></p>
+        <p id="result4"></p>
+        <script>
+            var a,b,multiply;
+            a= 20;
+            b= 10;
+            multiply= a*b;
+            document.getElementById("result3").innerHTML= "The product is " + multiply;
+        </script>
+    </body>
+</html> 
