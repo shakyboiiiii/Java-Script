@@ -1,0 +1,21 @@
+<html>
+<head>
+    <title>Arguments</title>
+</head>
+<body>
+    <p id="test"></p>
+    <script>
+        function myFunction(){
+            var i;
+            var max=0;
+            for(i=0; i<arguments.length;i++){
+                if(arguments[i]>max){
+                    max=arguments[i];
+                }
+            }
+            return max;
+        }
+        document.getElementById("test").innerHTML="Maximum number is "+ myFunction(15,24,10,9);
+    </script>
+</body>
+</html>
