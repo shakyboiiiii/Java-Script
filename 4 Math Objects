@@ -6,6 +6,15 @@
         <script> 
             var value=Math.abs(-20); 
             document.write(value); 
+            document.write("<br>")
+            var value1=Math.sin(30);
+            document.write(value1); 
+            document.write("<br>")
+            var value3=Math.ceil(29.365);
+            document.write(value3); 
+            document.write("<br>")
+            var value4=Math.floor(29.365);
+            document.write(value4); 
             </script> 
     </body> 
 </html>
