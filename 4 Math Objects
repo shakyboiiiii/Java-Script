@@ -1,0 +1,11 @@
+<html> 
+    <head> 
+        <title>Math objects</title> 
+    </head> 
+    <body> 
+        <script> 
+            var value=Math.abs(-20); 
+            document.write(value); 
+            </script> 
+    </body> 
+</html>
