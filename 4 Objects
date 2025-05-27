@@ -1,0 +1,12 @@
+<html>
+<head>
+    <title>Objects</title>
+</head>
+<body>
+    <p id="demo"></p>
+    <script>
+        var person={"name":"Michael","age":19};
+        document.getElementById("demo").innerHTML="My name is "+person.name+ " and my age is "+person.age;
+    </script>
+</body>
+</html>
