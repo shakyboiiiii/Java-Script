@@ -1,0 +1,17 @@
+<html> 
+<head> 
+<title>Methods in arrays</title> 
+</head> 
+<body> 
+<p id="join"></p> 
+<p id="push"></p> 
+<p id="result"></p> 
+<p id="pop"></p> 
+<script> var fruits=["Apple", "Banana", "cherry", "Dragonfruit", "Figs", "Guava", "Mango", "Kiwi"]; 
+document.getElementById("join").innerHTML=fruits.join("*"); 
+document.getElementById("push").innerHTML=fruits.push("grapes"); 
+document.getElementById("result").innerHTML=fruits; 
+document.getElementById("pop").innerHTML=fruits.pop(); 
+</script> 
+</body> 
+</html>
