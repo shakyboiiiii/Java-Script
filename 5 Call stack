@@ -1,0 +1,17 @@
+<html> 
+<head> 
+<title>Call stack</title> 
+</head> 
+<body> 
+<p id="add"></p> 
+<p id="average"></p> 
+<script> 
+function add(a,b){ return a+b; } 
+function average(a,b){ return (a+b)/2; } 
+let result=add(25,34); 
+let result1=average(25,34); 
+document.getElementById("add").innerHTML=result; 
+document.getElementById("average").innerHTML=result1; 
+</script> 
+</body> 
+</html>
