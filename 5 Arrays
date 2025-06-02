@@ -1,0 +1,12 @@
+<html> 
+  <head> 
+  </head> 
+  <body> 
+    <p id="result">
+    </p> 
+<script> 
+  var a=["Coding", "Learning", "Logic"]; 
+document.getElementById("result").innerHTML=a[2]; 
+</script> 
+</body> 
+</html>
