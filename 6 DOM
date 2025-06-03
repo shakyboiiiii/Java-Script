@@ -1,0 +1,13 @@
+<html>
+<head> 
+</head> 
+<body> 
+<p>hello i am from javascript</p> 
+<p id="test"></p> 
+<script>
+var text= 
+document.getElementById("test").innerHTML; 
+alert("This message is from"+text); 
+</script> 
+</body> 
+</html>
