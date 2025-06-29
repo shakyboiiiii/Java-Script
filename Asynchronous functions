@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Async/Await Example</title>
+</head>
+<body>
+
+  <h1>Data from Asynchronous Operation</h1>
+  <p id="dataDisplay">Loading data...</p>
+
+  <script>
+    // Simulate an asynchronous function (e.g., fetching data from an API)
+    async function fetchDataFromAPI() { 
+      // Use a promise to simulate delay and data retrieval
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve("Data successfully fetched!"); 
+        }, 2000); // Simulate a 2-second delay
+      });
+    }
+
+    // Function that depends on the result of fetchDataFromAPI
+    async function displayData() { 
+      try {
+        // Await the result of the asynchronous function
+        const data = await fetchDataFromAPI(); 
+
+        // Select the HTML element
+        const dataDisplayElement = document.getElementById("dataDisplay");
+
+        // Update the element's content with the fetched data
+        dataDisplayElement.textContent = data; 
+      } catch (error) {
+        // Handle potential errors during the asynchronous operation
+        console.error("Error fetching data:", error); 
+        const dataDisplayElement = document.getElementById("dataDisplay");
+        dataDisplayElement.textContent = "Error loading data.";
+      }
+    }
+
+    // Call the dependent function to initiate the process
+    displayData(); 
+  </script>
+
+</body>
+</html>
+
+
+
+or 
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Async/Await Example</title>
+</head>
+<body>
+
+  <h1>Data from Asynchronous Operation</h1>
+  <p id="dataDisplay">Loading data...</p>
+
+  <script src="script.js"></script> 
+
+</body>
+</html>
+
+
+
+
