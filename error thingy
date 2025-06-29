@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>JavaScript Error Handling</title>
+</head>
+<body>
+
+<h1>JavaScript Error Handling Example</h1>
+
+<p id="error-message" style="color: red;"></p>
+
+<script>
+function checkValue(value) {
+  try {
+    if (value < 0) {
+      throw new Error("Value cannot be negative!");
+    }
+    // Perform operations with a valid value
+    console.log("Value is valid:", value);
+  } catch (error) {
+    // Catch and display the error message
+    document.getElementById("error-message").textContent = "Error: " + error.message;
+    console.error("Caught an error:", error.message);
+  }
+}
+
+// Example usage:
+checkValue(-5); // This will cause an error
+checkValue(10); // This will not cause an error
+
+</script>
+
+</body>
+</html>
