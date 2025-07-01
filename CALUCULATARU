@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Perimeter Calculator</title>
+</head>
+<body>
+
+  <h2>Perimeter Calculator</h2>
+
+  <label for="shape">Select a shape:</label>
+  <select id="id_shapes" onchange="showInputs()">
+    <option value="circle">Circle</option>
+    <option value="triangle">Triangle</option>
+    <option value="square">Square</option>
+    <option value="rectangle">Rectangle</option>
+  </select>
+
+  <div id="id_inputs_circle" hidden>
+    <label for="id_radius">Radius:</label>
+    <input type="number" id="id_radius">
+  </div>
+
+  <div id="id_inputs_triangle" hidden>
+    <label for="id_side1">Side 1:</label>
+    <input type="number" id="id_side1"><br>
+    <label for="id_side2">Side 2:</label>
+    <input type="number" id="id_side2"><br>
+    <label for="id_side3">Side 3:</label>
+    <input type="number" id="id_side3">
+  </div>
+
+  <div id="id_inputs_square" hidden>
+    <label for="id_side">Side:</label>
+    <input type="number" id="id_side">
+  </div>
+
+  <div id="id_inputs_rectangle" hidden>
+    <label for="id_length">Length:</label>
+    <input type="number" id="id_length"><br>
+    <label for="id_width">Width:</label>
+    <input type="number" id="id_width">
+  </div>
+
+  <button onclick="calculatePerimeter()">Calculate Perimeter</button>
+
+  <p id="id_output"></p>
+
+  <script>
+    function showInputs() {
+      // Hide all input divs
+      document.getElementById("id_inputs_circle").hidden = true;
+      document.getElementById("id_inputs_triangle").hidden = true;
+      document.getElementById("id_inputs_square").hidden = true;
+      document.getElementById("id_inputs_rectangle").hidden = true;
+
+      // Get the selected shape
+      let shape = document.getElementById("id_shapes").value;
+
+      // Show the appropriate input div based on the selected shape
+      switch (shape) {
+        case "circle":
+          document.getElementById("id_inputs_circle").hidden = false;
+          break;
+        case "triangle":
+          document.getElementById("id_inputs_triangle").hidden = false;
+          break;
+        case "square":
+          document.getElementById("id_inputs_square").hidden = false;
+          break;
+        case "rectangle":
+          document.getElementById("id_inputs_rectangle").hidden = false;
+          break;
+      }
+    }
+
+    function calculatePerimeter() {
+      // Get the selected shape
+      let shape = document.getElementById("id_shapes").value;
+      let perimeter = 0;
+
+      // Calculate perimeter based on the selected shape
+      switch (shape) {
+        case "circle":
+          let radius = document.getElementById("id_radius").value;
+          perimeter = 2 * Math.PI * radius; // Formula for Perimeter of Circle
+          break;
+        case "triangle":
+          let side1 = Number(document.getElementById("id_side1").value);
+          let side2 = Number(document.getElementById("id_side2").value);
+          let side3 = Number(document.getElementById("id_side3").value);
+          perimeter = side1 + side2 + side3; // Formula for Perimeter of Triangle
+          break;
+        case "square":
+          let side = document.getElementById("id_side").value;
+          perimeter = 4 * side; // Formula for Perimeter of Square
+          break;
+        case "rectangle":
+          let length = document.getElementById("id_length").value;
+          let width = document.getElementById("id_width").value;
+          perimeter = 2 * (Number(length) + Number(width)); // Formula for Perimeter of Rectangle
+          break;
+      }
+
+      // Output the perimeter
+      document.getElementById("id_output").innerHTML = "Perimeter = " + perimeter.toFixed(2); // Display with 2 decimal places
+    }
+  </script>
+
+</body>
+</html>
