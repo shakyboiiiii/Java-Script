@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Shopping List (All in One)</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to the top */
+            min-height: 100vh;
+            margin: 20px; /* Add some margin around the container */
+            color: #333;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px; /* Max width for better readability on larger screens */
+            text-align: center;
+        }
+
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        .add-item {
+            display: flex;
+            margin-bottom: 25px;
+            gap: 10px; /* Space between input and button */
+        }
+
+        #itemInput {
+            flex-grow: 1; /* Allows input to take up available space */
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.1em;
+            transition: border-color 0.3s ease;
+        }
+
+        #itemInput:focus {
+            outline: none;
+            border-color: #4CAF50; /* Highlight border on focus */
+        }
+
+        #addItemBtn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        #addItemBtn:hover {
+            background-color: #45a049;
+            transform: translateY(-2px); /* Slight lift effect on hover */
+        }
+
+        #addItemBtn:active {
+            transform: translateY(0); /* Reset on click */
+        }
+
+        #shoppingList {
+            list-style: none; /* Remove default list bullets */
+            padding: 0;
+            margin: 0 0 25px 0;
+            text-align: left; /* Align list items to the left */
+        }
+
+        #shoppingList li {
+            background-color: #f9f9f9;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: background-color 0.3s ease, text-decoration 0.3s ease;
+        }
+
+        #shoppingList li.purchased {
+            background-color: #e6ffe6; /* Lighter green for purchased items */
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        #shoppingList li span {
+            flex-grow: 1; /* Allows the text to take up most space */
+            font-size: 1.2em;
+            cursor: pointer; /* To make it clear it's clickable for toggling purchased state */
+        }
+
+        #shoppingList li .item-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-button {
+            background: none;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .action-button:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .action-button.delete-btn {
+            color: #dc3545; /* Red for delete */
+        }
+
+        .action-button.delete-btn:hover {
+            color: #c82333;
+        }
+
+        .action-button.toggle-purchased-btn {
+            color: #007bff; /* Blue for toggle */
+        }
+
+        .action-button.toggle-purchased-btn:hover {
+            color: #0056b3;
+        }
+
+        .clear-button {
+            background-color: #6c757d;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%; /* Make button full width */
+        }
+
+        .clear-button:hover {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .clear-button:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>My Shopping List</h1>
+
+        <div class="add-item">
+            <input type="text" id="itemInput" placeholder="Add a new item...">
+            <button id="addItemBtn">Add Item</button>
+        </div>
+
+        <ul id="shoppingList">
+            </ul>
+
+        <button id="clearAllBtn" class="clear-button">Clear All Items</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const itemInput = document.getElementById('itemInput');
+            const addItemBtn = document.getElementById('addItemBtn');
+            const shoppingList = document.getElementById('shoppingList');
+            const clearAllBtn = document.getElementById('clearAllBtn');
+
+            // Load items from local storage when the page loads
+            loadShoppingList();
+
+            // Event Listener for Add Item button
+            addItemBtn.addEventListener('click', addItem);
+
+            // Event Listener for 'Enter' key press in the input field
+            itemInput.addEventListener('keypress', (event) => {
+                if (event.key === 'Enter') {
+                    addItem();
+                }
+            });
+
+            // Event Listener for the shopping list itself (for delegation)
+            shoppingList.addEventListener('click', handleListItemClick);
+
+            // Event Listener for Clear All button
+            clearAllBtn.addEventListener('click', clearAllItems);
+
+            function addItem() {
+                const itemText = itemInput.value.trim();
+
+                if (itemText !== '') {
+                    createListItem(itemText, false); // Add item, not purchased initially
+                    saveShoppingList(); // Save the updated list to local storage
+                    itemInput.value = ''; // Clear the input field
+                    itemInput.focus(); // Keep focus on input for quick entry
+                } else {
+                    alert('Please enter an item to add to your list!');
+                }
+            }
+
+            function createListItem(text, isPurchased) {
+                const listItem = document.createElement('li');
+                listItem.dataset.name = text; // Store original text for saving
+
+                const itemSpan = document.createElement('span');
+                itemSpan.textContent = text;
+                itemSpan.title = "Click to mark as purchased/unpurchased";
+                itemSpan.classList.add('item-text'); // Add a class for styling/selection
+
+                const actionsDiv = document.createElement('div');
+                actionsDiv.classList.add('item-actions');
+
+                const togglePurchasedBtn = document.createElement('button');
+                togglePurchasedBtn.innerHTML = '&#10003;'; // Checkmark symbol (✓)
+                togglePurchasedBtn.classList.add('action-button', 'toggle-purchased-btn');
+                togglePurchasedBtn.title = "Toggle purchased status";
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.innerHTML = '&#10006;'; // Cross symbol (✕)
+                deleteBtn.classList.add('action-button', 'delete-btn');
+                deleteBtn.title = "Delete item";
+
+                if (isPurchased) {
+                    listItem.classList.add('purchased');
+                }
+
+                actionsDiv.appendChild(togglePurchasedBtn);
+                actionsDiv.appendChild(deleteBtn);
+                listItem.appendChild(itemSpan);
+                listItem.appendChild(actionsDiv);
+                shoppingList.appendChild(listItem);
+            }
+
+            function handleListItemClick(event) {
+                const target = event.target;
+                const listItem = target.closest('li'); // Find the closest parent <li>
+
+                if (!listItem) return; // If clicked outside an li, do nothing
+
+                if (target.classList.contains('delete-btn')) {
+                    listItem.remove();
+                    saveShoppingList();
+                } else if (target.classList.contains('toggle-purchased-btn') || target.classList.contains('item-text')) {
+                    // Toggle 'purchased' class on the li element
+                    listItem.classList.toggle('purchased');
+                    saveShoppingList();
+                }
+            }
+
+            function clearAllItems() {
+                if (confirm('Are you sure you want to clear your entire shopping list?')) {
+                    shoppingList.innerHTML = ''; // Remove all child elements
+                    saveShoppingList(); // Clear local storage as well
+                }
+            }
+
+            function saveShoppingList() {
+                const items = [];
+                shoppingList.querySelectorAll('li').forEach(item => {
+                    items.push({
+                        name: item.dataset.name, // Use the stored original name
+                        purchased: item.classList.contains('purchased')
+                    });
+                });
+                localStorage.setItem('shoppingListItems', JSON.stringify(items));
+            }
+
+            function loadShoppingList() {
+                const storedItems = localStorage.getItem('shoppingListItems');
+                if (storedItems) {
+                    const items = JSON.parse(storedItems);
+                    items.forEach(item => {
+                        createListItem(item.name, item.purchased);
+                    });
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
